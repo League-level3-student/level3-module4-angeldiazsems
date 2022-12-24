@@ -19,7 +19,7 @@ public class _00_StackDemo {
          * method also returns a value that can be stored in a variable. Note
          * that every time the pop() method is called the size of the stack is
          * decreased by 1 even if the value isn't saved in a variable.
-         * 
+         * 	
          * The most recent object added to a Stack is the 'top' or 'head' of
          * the Stack. Normally, adding and removing objects from the middle of
          * a Stack is not allowed. This maintains the order of the Stack where
