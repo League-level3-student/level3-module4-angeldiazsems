@@ -13,21 +13,41 @@ public class _01_IntroToStack {
         // 2. Use a loop to push 100 random doubles between 0 and 100 to the Stack.
     	
     	Random ran = new Random();
-    	double r = ran.nextDouble(100.0);
     	
     	for(int i = 0; i < 101; i++) {
-    		
-    		if(r>0&&r<100) {
+        	double r = ran.nextDouble();
+        	r = r*101;
+    		if(r>0.0&&r<100.0) {
     		stack.push(r);
-    		System.out.println(r);
     		}
     	}
         // 3. Ask the user to enter in two numbers between 0 and 100, inclusive. 
-   
+    	String input1 = JOptionPane.showInputDialog("Enter a number between 1-100");
+    	String input2 = JOptionPane.showInputDialog("enter a second number between 1-100");
+    	
+    	double num1 = Double.parseDouble(input1);
+    	double num2 = Double.parseDouble(input2);
+    	if(num2 > num1) {
+    		double t = num2;
+    		num2 =  num1;
+    		num1 = t;
+    	}
+    	
+    	//num1 will be the maxiumim^ 
+    	//num2 will be the minimum
+    	
         // 4. Pop all the elements off of the Stack. Every time a double is popped that is
         //    between the two numbers entered by the user, print it to the screen.
-
-
+    	
+    	
+    	System.out.println("deleting stack...");
+    	while(!stack.isEmpty()) {
+    		double top = stack.pop();
+    		if(top<=num1 && top>=num2) {
+    			System.out.println("Popping "+top+", since it is between "+num2+" and "+num1+".");
+    		}
+    		
+    	}
         // EXAMPLE:
         // NUM 1: 65
         // NUM 2: 75
@@ -43,3 +63,4 @@ public class _01_IntroToStack {
         // 74.12121224
     }
 }
+

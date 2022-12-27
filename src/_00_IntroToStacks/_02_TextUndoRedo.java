@@ -1,6 +1,14 @@
 package _00_IntroToStacks;
 
-public class _02_TextUndoRedo {
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Stack;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class _02_TextUndoRedo implements KeyListener{
     /* 
      * Create a JFrame with a JPanel and a JLabel.
      * 
@@ -16,6 +24,48 @@ public class _02_TextUndoRedo {
      * pressed, the top Character is popped  off the Stack and added back to
      * the JLabel.
      */
+
+JFrame frame = new JFrame();
+JPanel panel = new JPanel();
+JLabel label = new JLabel("ads");
+
+
+void code() {
+	frame.setVisible(true);
+	frame.setSize(300,300);
+	frame.add(panel);
+	panel.add(label);
+	Stack<Character> stack = new Stack<Character>();
+	
+}
+
+@Override
+public void keyTyped(KeyEvent arg0) {
+
+	
+	if(arg0.getKeyCode() == KeyEvent.VK_TAB) {
+		
+	}
+	if(arg0.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+		
+	}
+}
+
+@Override
+public void keyPressed(KeyEvent arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+@Override
+public void keyReleased(KeyEvent arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+
 
 
 }
