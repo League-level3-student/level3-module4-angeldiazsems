@@ -2,6 +2,7 @@ package _03_Hangman;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Stack;
 
@@ -17,9 +18,11 @@ public class Hangman implements KeyListener {
 	StringBuilder bobby;
 	JFrame frame = new JFrame();
 	JPanel panel = new JPanel();
-	JLabel label = new JLabel("H" + bob);
+	JLabel label = new JLabel("Hangman");
 	String letters;
 	String hiddenWord;
+	String currentWord;
+
 	void setup() {
 
 		frame.setVisible(true);
@@ -40,30 +43,33 @@ public class Hangman implements KeyListener {
 		// adding words to stack
 		while (words.size() != amountOfWords) {
 			String word = Utilities.readRandomLineFromFile("dictionary.txt");
-			if (words.contains(word)) {
-				System.out.println("D: " + word);
-			} else {
+			if (!words.contains(word)) {
 				words.push(word);
 				System.out.println(word);
+			} else {
+				
 			}
 		}
 
 	}
 
-	public void code() {
+	void code() {
 
 		System.out.println(words.size());
-		String currentWord = words.pop();
+		currentWord = words.pop();
 		System.out.println(words.size());
 		char[] t = currentWord.toCharArray();
 		letters = Arrays.toString(t);
 
 		String regex = "[a-z]"; // all letters
-		String regex2 = "[,]"; // all commas
+		String regex2 = "[,\\[\\]]"; // all commas and brackets
+		String regex3 = "[ ]";
 		bobby = new StringBuilder(letters);
 		String noLetters = bobby.toString().replaceAll(regex, "*"); // replacing letters with *
 		bobby = new StringBuilder(noLetters);
-		hiddenWord = bobby.toString().replaceAll(regex2, " ");
+		String noSpace  = bobby.toString().replaceAll(regex3, "");
+		bobby = new StringBuilder(noSpace);
+		hiddenWord = bobby.toString().replaceAll(regex2, "");
 		label.setText(hiddenWord);
 
 		System.out.println("" + letters);
@@ -73,20 +79,29 @@ public class Hangman implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stun
-		for (int i = 0; i < letters.length(); i++) {
-			if (arg0.getKeyChar() == letters.charAt(i)) {
-				System.out.println("right key");
-				String rep = "["+letters.charAt(i)+"]";
-				String rep2 = "[*]";
-				hiddenWord.replaceAll(rep2, rep);
-				
+		ArrayList<Integer> index = new ArrayList<Integer>();
+		String keyPressed = ""+arg0.getKeyChar();
+		
+		for (int i = 0; i < currentWord.length(); i++) {
+			if (arg0.getKeyChar() == currentWord.charAt(i)) {
+				index.add(i);
 			}
 		}
-
-	//	System.out.println(arg0.getKeyChar());
-	//	bob.append(arg0.getKeyChar());
-	//	label.setText(bob.toString());
-
+		System.out.println(""+arg0.getKeyChar()+" is at index : "+index);
+		
+		for(int i =0; i < index.size(); i++) {
+			bobby = new StringBuilder(hiddenWord);
+			int index2 = index.get(i);			
+			hiddenWord = bobby.replace(index2, index2+1, keyPressed).toString();
+			System.out.println("Replacing");
+			label.setText(hiddenWord);
+		}
+		
+	
+	
+	
+	
+	
 	}
 
 	@Override
