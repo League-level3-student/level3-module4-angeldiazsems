@@ -4,6 +4,7 @@ public class HangmanRunner {
 public static void main(String[] args) {
 	Hangman hang = new Hangman() ;
 	hang.setup();
+	hang.begining();
 	hang.code();
 }
 }
