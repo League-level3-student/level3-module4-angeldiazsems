@@ -23,79 +23,57 @@ public class MazeMaker {
 		// This will be the starting point. Then select a random cell along
 		// the opposite wall and remove its exterior wall. This will be the
 		// finish line.
-		Cell start;
-		Cell finish;
-		int count = 0;
-		while (count == 0) {
-			int ro = randGen.nextInt(rows - 1);
-			int co = randGen.nextInt(cols - 1);
-			start = maze.getCell(ro, co);
+		
+		//int count = 0;
 
-			if (start.hasNorthWall()) {
-				count = 1;
-				start.setNorthWall(false);
-			} else if (start.hasSouthWall()) {
-				count = 2;
-				start.setSouthWall(false);
-			} else if (start.hasEastWall()) {
-				count = 3;
-				start.setEastWall(false);
-			} else if (start.hasWestWall()) {
-				count = 4;
-				start.setWestWall(false);
-			}
 
-		}
-		while (count != 0) {
-			int ro = randGen.nextInt(rows - 1);
-			int co = randGen.nextInt(cols - 1);
-			finish = maze.getCell(ro, co);
+		int co = randGen.nextInt(maze.getCols());
+		System.out.println(co);
+		Cell start = maze.getCell(0, co);
+		
 
-			if (count == 1 && finish.hasSouthWall()) {
-				count = 0;
-				finish.setSouthWall(false);
-			}
-			else if (count == 2 && finish.hasNorthWall()) {
-				count = 0;
-				finish.setNorthWall(false);
-			}
-			else if (count == 3 && finish.hasWestWall()) {
-				count = 0;
-				finish.setWestWall(false);
-			}
-			else if (count == 4 && finish.hasEastWall()) {
-				count = 0;
-				finish.setEastWall(false);
-			}
-
-		}
-
+		
+		
+		
+		
+		int col = randGen.nextInt(maze.getCols());
+		Cell finish = maze.getCell(maze.getRows()-1, col);
+		
+		System.out.println(col);
+		finish.setEastWall(false);
+		
+		start.setWestWall(false);
+		
 		// 2. select a random cell in the maze to start
-		int ro = randGen.nextInt(rows - 1);
-		int co = randGen.nextInt(cols - 1);
-		Cell ran = maze.getCell(ro, co);
+		
+		int rom = randGen.nextInt(maze.getRows());
+		int com = randGen.nextInt(maze.getCols());
+		Cell ran = maze.getCell(rom, com);
 		// 3. call the selectNextPath method with the randomly selected cell
 		selectNextPath(ran);
+
 		return maze;
 	}
 
 	// 4. Complete the selectNextPathMethod
 	private static void selectNextPath(Cell currentCell) {
+
 		// A. SET currentCell as visited
+
 		currentCell.setBeenVisited(true);
 		// B. check for unvisited neighbors using the cell
-		ArrayList<Cell> c = new ArrayList<Cell>();
-		c = getUnvisitedNeighbors(currentCell);
+		ArrayList<Cell> c = getUnvisitedNeighbors(currentCell);
 		// C. if has unvisited neighbors,
-		if (!c.isEmpty()) {
-			int r = randGen.nextInt(c.size() - 1);
-			for (int i = 0; i < c.size(); i++) {
+		if (c.size()>0) {
+			int r = randGen.nextInt(c.size());
+			//for (int i = 0; i < c.size(); i++) {
 				Cell f = c.get(r);
 				uncheckedCells.push(f);
 				removeWalls(currentCell, f);
-				f = currentCell;
+				currentCell = f;
 				currentCell.setBeenVisited(true);
-			}
+				selectNextPath(currentCell);
+			//}
 
 		}
 		// C1. select one at random.
@@ -136,8 +114,9 @@ public class MazeMaker {
 				c1.setEastWall(false);
 				c2.setWestWall(false);
 			}
-		} else {
-			if (c1.getRow() > c2.getRow()) {
+		} else {									
+														
+			if (c1.getRow() > c2.getRow()) {		
 				c1.setNorthWall(false);
 				c2.setSouthWall(false);
 			} else {
