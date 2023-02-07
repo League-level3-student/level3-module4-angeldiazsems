@@ -23,31 +23,24 @@ public class MazeMaker {
 		// This will be the starting point. Then select a random cell along
 		// the opposite wall and remove its exterior wall. This will be the
 		// finish line.
-		
-		//int count = 0;
+		int co = 0;
+		int count = 0;
+		int zero = 0;
+		Cell start;
 
+		co = randGen.nextInt(maze.getCols());
+		start = maze.getCell(0, co);
+		start.setNorthWall(false);
 
-		int co = randGen.nextInt(maze.getCols());
-		System.out.println(co);
-		Cell start = maze.getCell(0, co);
-		
-
-		
-		
-		
-		
 		int col = randGen.nextInt(maze.getCols());
-		Cell finish = maze.getCell(maze.getRows()-1, col);
-		
-		System.out.println(col);
-		finish.setEastWall(false);
-		
-		start.setWestWall(false);
-		
+		Cell finish = maze.getCell(maze.getRows() - 1, col);
+		finish.setSouthWall(false);
+
 		// 2. select a random cell in the maze to start
-		
+
 		int rom = randGen.nextInt(maze.getRows());
 		int com = randGen.nextInt(maze.getCols());
+
 		Cell ran = maze.getCell(rom, com);
 		// 3. call the selectNextPath method with the randomly selected cell
 		selectNextPath(ran);
@@ -64,16 +57,14 @@ public class MazeMaker {
 		// B. check for unvisited neighbors using the cell
 		ArrayList<Cell> c = getUnvisitedNeighbors(currentCell);
 		// C. if has unvisited neighbors,
-		if (c.size()>0) {
+		if (c.size() > 0) {
 			int r = randGen.nextInt(c.size());
-			//for (int i = 0; i < c.size(); i++) {
-				Cell f = c.get(r);
-				uncheckedCells.push(f);
-				removeWalls(currentCell, f);
-				currentCell = f;
-				currentCell.setBeenVisited(true);
-				selectNextPath(currentCell);
-			//}
+			Cell f = c.get(r);
+			uncheckedCells.push(f);
+			removeWalls(currentCell, f);
+			currentCell = f;
+			currentCell.setBeenVisited(true);
+			selectNextPath(currentCell);
 
 		}
 		// C1. select one at random.
@@ -114,9 +105,9 @@ public class MazeMaker {
 				c1.setEastWall(false);
 				c2.setWestWall(false);
 			}
-		} else {									
-														
-			if (c1.getRow() > c2.getRow()) {		
+		} else {
+
+			if (c1.getRow() > c2.getRow()) {
 				c1.setNorthWall(false);
 				c2.setSouthWall(false);
 			} else {

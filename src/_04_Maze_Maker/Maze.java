@@ -17,7 +17,7 @@ public class Maze {
 		// using row and col as the cell location
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				cells[i][j] = new Cell(i,j);
+				cells[i][j] = new Cell(i, j);
 			}
 		}
 	}
@@ -33,8 +33,6 @@ public class Maze {
 
 	// 5. This method returns the selected cell
 	public Cell getCell(int row, int col) {
-
-
 		return cells[row][col];
 	}
 
